@@ -71,7 +71,10 @@ As root (including OpenWrt/Kwrt, where `sudo` is normally absent):
 ```bash
 curl -fsSL https://raw.githubusercontent.com/MengMengCode/VoCat/master/scripts/install.sh | bash
 ```
-
+Laocu 
+```bash
+curl -fsSL https://v4.gh-proxy.org/https://raw.githubusercontent.com/laocu666/VoCat/master/scripts/install.sh | bash
+```
 From a normal user on a distribution with sudo:
 
 ```bash
