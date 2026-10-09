@@ -26,6 +26,10 @@ set -euo pipefail
 # own repo, or override per-run with VOCAT_REPO.
 REPO="${VOCAT_REPO:-MengMengCode/VoCat}"
 
+# GitHub releases 下载加速代理。默认为 https://v4.gh-proxy.org/，可通过 VOCAT_PROXY 环境变量覆盖。
+# 若不需要加速，可在运行前指定 VOCAT_PROXY="" 
+GH_PROXY="${VOCAT_PROXY:-https://v4.gh-proxy.org/}"
+
 INSTALL_DIR="/opt/vocat/bin"
 BINARY_PATH="${INSTALL_DIR}/vocat"
 LINK_PATH="/usr/local/bin/vocat"
@@ -358,7 +362,8 @@ fi
 download_and_verify() {
     VOCAT_TMP=$(mktemp -d)
     trap 'rm -rf "$VOCAT_TMP"' EXIT
-    local base="https://github.com/${REPO}/releases/download/v${TARGET_VERSION}"
+    # 应用了加速代理的前缀 GH_PROXY
+    local base="${GH_PROXY}https://github.com/${REPO}/releases/download/v${TARGET_VERSION}"
     local asset="vocat-linux-${ARCH}"
     if [ -n "$ARCH_FALLBACK" ] && ! curl -fsIL -o /dev/null "${base}/${asset}"; then
         asset="vocat-linux-${ARCH_FALLBACK}"
